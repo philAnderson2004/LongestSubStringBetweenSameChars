@@ -1,0 +1,99 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using NUnit.Framework;
+
+
+namespace GuidanceProject
+{
+    [TestFixture]
+    public class LongestSubstringTest
+    {       
+        private LongestSubstring longestSubString;
+        private string testString;
+
+        [SetUp]
+        public void SetUp()
+        {
+            longestSubString = new LongestSubstring();
+            testString = String.Empty;
+        }
+
+
+        //when null string
+        [Test]
+        public void TestLongestDistanceBetweenTwoChars_WhenStringIsEmpty()
+        {            
+            int result = longestSubString.LongestDistanceBetweenTwoChars(testString);
+
+            Assert.AreEqual(0, result);
+        }
+        
+
+        //when only one char in string
+        [Test]
+        public void TestLongestDistanceBetweenTwoChars_WhenOneCharInString()
+        {            
+            testString = "a";
+            int result = longestSubString.LongestDistanceBetweenTwoChars(testString);
+
+            Assert.AreEqual(0, result);
+        }
+        
+
+        //when none two chars are the same
+        [Test]
+        public void TestLongestDistanceBetweenTwoChars_WhenOneCharAreUniqueInString()
+        {
+            testString = "abcdefghijklmnop";
+            int result = longestSubString.LongestDistanceBetweenTwoChars(testString);
+
+            Assert.AreEqual(0, result);
+        }
+
+
+        //when all chars are same
+        [Test]
+        public void TestLongestDistanceBetweenTwoChars_WhenAllCharInStringIsSame()
+        {
+            testString = "aaaaaaaaaaaaaaaa";
+            int result = longestSubString.LongestDistanceBetweenTwoChars(testString);
+
+            Assert.AreEqual(0, result);
+        }
+
+
+        //when some are two
+        [Test]
+        public void TestLongestDistanceBetweenTwoChars_WhenAllSameCharsHaveNoUniquireCharBetweenThem()
+        {
+            testString = "aabbccccccdddddeeefff";
+            int result = longestSubString.LongestDistanceBetweenTwoChars(testString);
+
+            Assert.AreEqual(0, result);
+        }
+
+        //when multiple char have same lenght
+        [Test]
+        public void TestLongestDistanceBetweenTwoChars_WhenMultipleCharsHaveTwoCharBetweenThem()
+        {
+            testString = "abbacddcekle";
+            int result = longestSubString.LongestDistanceBetweenTwoChars(testString);
+
+            Assert.AreEqual(2, result);
+        }
+
+        //when same but different length
+        [Test]
+        public void TestLongestDistanceBetweenTwoChars_WhenMultipleSameCharsHaveDifferentLenghtBetweenThem()
+        {
+            testString = "abbbaanaalllllla";
+            int result = longestSubString.LongestDistanceBetweenTwoChars(testString);
+
+            Assert.AreEqual(6, result);
+        }
+
+        //Note should add unit test for each of the other methods in LongestSubstring class 
+    }
+}
