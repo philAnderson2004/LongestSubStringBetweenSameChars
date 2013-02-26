@@ -1,0 +1,113 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace GuidanceProject
+{
+    public class LongestSubstring
+    {
+        public int LongestDistanceBetweenTwoChars(string inputString)
+        {
+           //convert the string to an array
+            char[] charArray = GetStringArray(inputString);
+
+            if (charArray.Length < 2)
+                return 0;
+
+            //get a dictonary (hash table) with each character and the location in the array
+            Dictionary<char, List<int>> charArrayIndexDictonary = PopulateCharIndexDictonary(charArray);
+
+            //get the list(s) with more than 1 character
+            List<List<int>> multipleCharacterLocationList = GetMultipleCharactersLists(charArrayIndexDictonary);
+
+            if (multipleCharacterLocationList.Count == 0)
+                return 0;
+
+            //get the max distance between each charater in the and array indexe list
+            List<int> maxDistanceCharList = GetMaxDistanceBetweenIndexLocationsInLists(multipleCharacterLocationList);
+
+            //return the max out of all the char list in the array
+            return GetMaxIntFromList(maxDistanceCharList);
+        }
+
+
+        internal int GetMaxIntFromList(List<int> maxDistanceCharList)
+        {           
+            //Use the LINQ .Net library to get the max from the list
+            // I could loop thorugh the list and grab the max if you requested that i not use this library also
+            return maxDistanceCharList.Max( value => (int) value);
+        }
+
+
+        internal List<int> GetMaxDistanceBetweenIndexLocationsInLists(List<List<int>> multipleCharacterLocationList)
+        {
+            List<int> maxDistanceCharList = new List<int>();
+            int max;
+            int index1;
+            int index2;
+            int difference;
+
+            //loop trough the list get all the max distance
+            foreach (var charLocationList in multipleCharacterLocationList)
+            {
+                max = 0;
+                for (int i = 1; i < charLocationList.Count; i++)
+                {
+                    index1 = charLocationList[i - 1];
+                    index2 = charLocationList[i];
+                    difference = index2 - index1 - 1;
+                    if (difference > max)
+                        max = difference;
+                }
+                maxDistanceCharList.Add(max);
+            }
+
+            //then return the max char List 
+            return maxDistanceCharList;
+        }
+
+
+        internal List<List<int>> GetMultipleCharactersLists(Dictionary<char, List<int>> charArrayIndexDictonary)
+        {
+            List<List<int>> multipleCharacterList = new List<List<int>>();
+
+            foreach (char key in charArrayIndexDictonary.Keys)
+            {
+                if (charArrayIndexDictonary[key].Count > 1)
+                    multipleCharacterList.Add(charArrayIndexDictonary[key]);
+            }
+
+            return multipleCharacterList;        
+        }
+
+
+        internal char[] GetStringArray(string inputString)
+        {
+            //note if I cannot use this .net library ToArray,
+            //i would create a char index pointer and loop through
+            //the string using the charAt(index pointer) and build up the Array
+            return inputString.ToArray();
+        }
+
+
+        internal Dictionary<char, List<int>> PopulateCharIndexDictonary(char[] charArray)
+        {
+            Dictionary<char, List<int>> charArrayIndexDictonary = new Dictionary<char, List<int>>();
+
+            char character;
+           
+            for (int index = 0; index < charArray.Length; index++)
+            {
+                character = charArray[index];
+                if(!charArrayIndexDictonary.ContainsKey(character))
+                    charArrayIndexDictonary.Add(character, new List<int>());
+
+                charArrayIndexDictonary[character].Add(index);               
+            }
+
+            return charArrayIndexDictonary;
+        }
+
+    }
+}
