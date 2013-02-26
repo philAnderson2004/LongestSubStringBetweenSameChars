@@ -1,0 +1,31 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace GuidanceProject
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string inputString = string.Empty;
+
+            Console.WriteLine("Welcome, Enter (-1) to exit.\n");
+
+            Console.WriteLine("\n\nPlease enter the string");
+            inputString = Console.ReadLine();
+
+            while (!inputString.Equals("-1"))
+            {               
+                int max = new LongestSubstring().LongestDistanceBetweenTwoChars(inputString);
+                Console.WriteLine("Longest distance between two characters in the string {0} is {1} spaces", inputString, max);
+
+                Console.WriteLine("\n\nPlease enter the string");
+                inputString = Console.ReadLine();
+            }
+
+            Console.WriteLine("Thanks for using the program");
+        }
+    }
+}
